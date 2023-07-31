@@ -1,0 +1,159 @@
+<div class="main-content page-m" style="margin-top: 3em;">
+
+    <div class="section-content section-content-p30">
+        <div class="container-fluid">
+            <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
+    
+                <!-- customer form group -->
+                <div formGroupName="customer" class="form-area">
+                    <!-- <h3>Customer</h3> -->
+    
+                    <div class="row">
+                        <div class="col-md-2"> <label style="font-weight: bold;">First Name</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space"></div>
+                            <input formControlName="firstName" type="text">
+    
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-md-2"> <label style="font-weight: bold;">Last Name</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space"></div>
+                            <input formControlName="lastName" type="text">
+                           
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-md-2"> <label style="font-weight: bold;">Email</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space"></div>
+                            <input formControlName="email" type="text">
+                        </div>
+                    </div>
+    
+                </div>
+    
+                <!-- Shipping address-->
+                <div formGroupName="shippingAddress" class="form-area" style="margin-top: 2em;">
+                    <h3>Shipping Address</h3>
+
+    
+                    <div class="row" style="margin-bottom: 1em;">
+                        <div class="col-md-2"> <label style="font-weight: bold;">Street</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space"></div>
+                            <input formControlName="street" type="text">
+                        </div>
+                    </div>
+    
+                    <div class="row" style="margin-bottom: 1em;">
+                        <div class="col-md-2"> <label style="font-weight: bold;">City</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space"></div>
+                            <input formControlName="city" type="text">
+                        </div>
+                    </div>
+    
+                    <div class="row" style="margin-bottom: 1em;">
+                        <div class="col-md-2"> <label style="font-weight: bold;">State</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space"></div>
+                            <select formControlName="state" style="width: 11.7em;">
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="DC">District Of Columbia</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+                                <!-- <option *ngFor="let state of shippingAddressStates" [ngValue]="state">
+                                    {{state.name}}
+                                </option> -->
+                            </select>
+                            
+                        </div>
+                    </div>
+    
+    
+                    <div class="row">
+                        <div class="col-md-2"> <label style="font-weight: bold;">Zip Code</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space"></div>
+                            <input formControlName="zipCode" type="text">
+                        </div>
+                    </div>
+    
+    
+                </div>
+  
+                <!--ORDER DETAILS-->
+                <div class="form-area" style="margin-top: 3em;">
+                    <h3>Review Your Order</h3>
+    
+                    <h6>Total Quantity: {{ totalQuantity }}</h6>
+                    <h6>Shipping: FREE</h6>
+                    <h6>Total Price: {{ totalPrice | currency: 'USD' }}</h6>
+                </div>
+    
+                <div style="display: inline-block;margin-right: 1em;">
+                    <a  routerLink="/cart-details"  style="width: 9em;height: 2.5em;" class="btn btn-primary btn-md">Back to cart</a>
+                </div>
+                 <!-- submit button-->
+                 <div class="text-center" style="margin-top: 1em;display: inline-block;">
+                    <button style="height: 2.4em; border-color: blue;"  type="submit" class="btn btn-fix" [disabled]="isDisabled">Purchase</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    </div>
+    
+    
+    
+    
