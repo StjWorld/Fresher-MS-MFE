@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-
+// This is Service class
 class ProductService {
     getProducts(){
         return axios.get(`http://localhost:8181/api`);
