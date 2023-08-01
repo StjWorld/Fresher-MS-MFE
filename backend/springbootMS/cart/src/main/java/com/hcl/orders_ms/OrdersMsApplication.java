@@ -16,15 +16,10 @@ import java.util.Date;
 @SpringBootApplication
 public class OrdersMsApplication implements CommandLineRunner {
 //public class OrdersMsApplication{
-
-
 	@Autowired
 	CartRepo cartRepo;
-
 	@Autowired
 	CartItemRepo cartItemRepo;
-
-
 	public static void main(String[] args) {
 		SpringApplication.run(OrdersMsApplication.class, args);
 	}
