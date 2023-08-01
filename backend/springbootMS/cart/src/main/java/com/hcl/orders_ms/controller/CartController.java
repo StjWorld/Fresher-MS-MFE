@@ -2,6 +2,7 @@ package com.hcl.orders_ms.controller;
 
 import com.hcl.orders_ms.models.Cart;
 import com.hcl.orders_ms.models.CartItem;
+import com.hcl.orders_ms.publisher.RabbitMQProducer;
 import com.hcl.orders_ms.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,11 +18,24 @@ public class CartController {
     @Autowired
     CartService cartService;
 
+    @Autowired
+    private RabbitMQProducer producer;
+
+
+    @PostMapping("/purchase")
+    public ResponseEntity<String> sendMessage(@RequestBody Cart cart){
+        System.out.println("The cart: "+cart);
+        producer.sendMessage(cart);
+        return ResponseEntity.ok(cart + "are purchased, message sent to RabbitMQ");
+    }
+
     @GetMapping
     public ResponseEntity<List<Cart>> getAll(){
        List<Cart> cart = cartService.getAll();
        return ResponseEntity.ok(cart);
     }
+
+
 
     @PostMapping
    public ResponseEntity<Cart> createCart(@RequestBody Cart cart){

@@ -32,16 +32,18 @@ public class OrdersMsApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception{
 
-		CartItem cartItem = new CartItem(1,5);
-		CartItem cartItem2 = new CartItem(2,15);
-		Date date = new Date();
-		Long id = Long.valueOf(3);
-		Cart cart = new Cart(id, date);
-		cart.add(cartItem);
-		cart.add(cartItem2);
-		cartRepo.save(cart);
-		cartItemRepo.save(cartItem);
-		cartItemRepo.save(cartItem2);
+//		CartItem cartItem = new CartItem(1,5);
+//		CartItem cartItem2 = new CartItem(2,15);
+//		Date date = new Date();
+//		Long id = Long.valueOf(3);
+//		Cart cart = new Cart(id, date);
+//		cart.add(cartItem);
+//		cart.add(cartItem2);
+//		cartRepo.save(cart);
+
+
+//		cartItemRepo.save(cartItem);
+//		cartItemRepo.save(cartItem2);
 
 	}
 

@@ -1,0 +1,10 @@
+/Users/wyatt/Desktop/未命名文件夹/HCL/Fresher-MS-MFE/backend/springbootMS/cart/src/main/java/com/hcl/orders_ms/config/RabbitMQConfig.java
+/Users/wyatt/Desktop/未命名文件夹/HCL/Fresher-MS-MFE/backend/springbootMS/cart/src/main/java/com/hcl/orders_ms/controller/CartController.java
+/Users/wyatt/Desktop/未命名文件夹/HCL/Fresher-MS-MFE/backend/springbootMS/cart/src/main/java/com/hcl/orders_ms/repo/CartRepo.java
+/Users/wyatt/Desktop/未命名文件夹/HCL/Fresher-MS-MFE/backend/springbootMS/cart/src/main/java/com/hcl/orders_ms/service/CartService.java
+/Users/wyatt/Desktop/未命名文件夹/HCL/Fresher-MS-MFE/backend/springbootMS/cart/src/main/java/com/hcl/orders_ms/models/CartItem.java
+/Users/wyatt/Desktop/未命名文件夹/HCL/Fresher-MS-MFE/backend/springbootMS/cart/src/main/java/com/hcl/orders_ms/OrdersMsApplication.java
+/Users/wyatt/Desktop/未命名文件夹/HCL/Fresher-MS-MFE/backend/springbootMS/cart/src/main/java/com/hcl/orders_ms/models/Cart.java
+/Users/wyatt/Desktop/未命名文件夹/HCL/Fresher-MS-MFE/backend/springbootMS/cart/src/main/java/com/hcl/orders_ms/controller/CartItemController.java
+/Users/wyatt/Desktop/未命名文件夹/HCL/Fresher-MS-MFE/backend/springbootMS/cart/src/main/java/com/hcl/orders_ms/repo/CartItemRepo.java
+/Users/wyatt/Desktop/未命名文件夹/HCL/Fresher-MS-MFE/backend/springbootMS/cart/src/main/java/com/hcl/orders_ms/service/CartItemService.java
