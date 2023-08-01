@@ -1,0 +1,14 @@
+{
+    
+    "id":2,
+    "sku": "some product",
+    "name": "product name",
+    "description": "Learn Java",
+    "unitPrice": 30.99,
+    "unitsInStock": 101,
+    "imageUrl": "assets/images/products/placeholder.png",
+    "active": true,
+    "quantity": 1,
+    "dateCreated": "2022-02-28T12:57:15.000+00:00",
+    "lastUpdated": null
+}
