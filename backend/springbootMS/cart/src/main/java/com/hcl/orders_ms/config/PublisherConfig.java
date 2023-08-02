@@ -18,27 +18,27 @@ public class PublisherConfig {
     @Value("${rabbitmq.exchange.name}")
     private String exchange;
 
-    @Value("${rabbitmq.queue.name}")
+    @Value("${rabbitmq.queue.name.cart-to-order}")
     private String queue;
 
-    @Value("${rabbitmq.routing.key}")
+    @Value("${rabbitmq.routing.key.cart-to-order}")
     private String routing;
 
     @Bean
-    public Queue queue(){
+    public Queue queueToOrder(){
         return new Queue(queue);
     }
 
     @Bean
-    public TopicExchange exchange(){
+    public TopicExchange exchangeToOrder(){
         return new TopicExchange(exchange);
     }
 
     //bind que with exchange using routing key
     @Bean
-    public Binding binding(){
-        return BindingBuilder.bind(queue())
-                .to(exchange())
+    public Binding bindingToOrder(){
+        return BindingBuilder.bind(queueToOrder())
+                .to(exchangeToOrder())
                 .with(routing);
     }
 
