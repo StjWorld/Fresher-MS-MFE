@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,5 +39,12 @@ public class Order {
 
   @Column(name = "order_price")
   private double orderPrice;
+
+  public void add(OrderProducts newOrderProduct) {
+    if (orderProducts == null) {
+      orderProducts = new ArrayList<>();
+    }
+    orderProducts.add(newOrderProduct);
+    //newOrderProduct.setOrder(this);
+  }
 }
-// :) first push on alex branch

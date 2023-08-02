@@ -1,6 +1,8 @@
 package com.ordersms.orders.service;
 
 import com.ordersms.orders.entity.Order;
+import com.ordersms.orders.entity.OrderProducts;
+import com.ordersms.orders.repository.OrderProductsRepo;
 import com.ordersms.orders.repository.OrderRepo;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,9 @@ public class OrderService {
   @Autowired
   private OrderRepo orderRepo;
 
+  @Autowired
+  private OrderProductsRepo orderProductsRepo;
+
   public Order getOrderById(Long id) {
     return orderRepo.findById(id).orElse(null);
   }
@@ -21,7 +26,17 @@ public class OrderService {
   }
 
   public Order createOrder(Order order) {
-    return orderRepo.save(order);
+    Order newOrder = new Order();
+    newOrder.setId(order.getId());
+    newOrder.setOrderDate(order.getOrderDate());
+    for (OrderProducts product : order.getOrderProducts()) {
+      OrderProducts newOrderProduct = new OrderProducts();
+      newOrderProduct.setOrder(newOrder);
+      newOrderProduct.setProductId(product.getProductId());
+      newOrderProduct.setProductQuantity(product.getProductQuantity());
+      newOrder.add(newOrderProduct);
+    }
+    return orderRepo.save(newOrder);
   }
 
   public boolean deleteOrderById(Long id) {
@@ -30,5 +45,9 @@ public class OrderService {
       return true;
     }
     return false;
+  }
+
+  public Order updateOrder(Long id, Order order) {
+    return null;
   }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,6 +42,19 @@ public class OrderController {
   public ResponseEntity<Order> createOrder(@RequestBody Order order) {
     Order savedOrder = orderService.createOrder(order);
     return ResponseEntity.status(HttpStatus.CREATED).body(savedOrder);
+  }
+
+  @PutMapping("/id")
+  public ResponseEntity<Order> updateOrder(
+    @PathVariable Long id,
+    @RequestBody Order order
+  ) {
+    if (orderService.getOrderById(id) != null) {
+      Order updatedOrder = orderService.updateOrder(id, order);
+      return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedOrder);
+    } else {
+      return ResponseEntity.notFound().build();
+    }
   }
 
   @DeleteMapping("/{id}")
