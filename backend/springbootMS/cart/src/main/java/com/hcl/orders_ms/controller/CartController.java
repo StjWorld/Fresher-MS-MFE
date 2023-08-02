@@ -1,8 +1,7 @@
 package com.hcl.orders_ms.controller;
 
 import com.hcl.orders_ms.models.Cart;
-import com.hcl.orders_ms.models.CartItem;
-import com.hcl.orders_ms.publisher.RabbitMQProducer;
+import com.hcl.orders_ms.publisher.RabbitMQProducerToProd;
 import com.hcl.orders_ms.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +18,7 @@ public class CartController {
     CartService cartService;
 
     @Autowired
-    private RabbitMQProducer producer;
+    private RabbitMQProducerToProd producer;
 
 
     @PostMapping("/purchase")
