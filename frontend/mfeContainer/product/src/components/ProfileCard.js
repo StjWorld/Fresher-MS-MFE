@@ -1,5 +1,3 @@
-import Button from "./Button";
-import { AiOutlinePlus } from "react-icons/ai";
 
 function ProfileCard({ title, handle, image, description }){
 
