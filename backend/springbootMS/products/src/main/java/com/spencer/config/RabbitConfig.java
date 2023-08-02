@@ -22,8 +22,13 @@ public class RabbitConfig {
 	}
 	
 	@Bean
-	Queue CartToProdQueue() {
+	Queue cartToProdQueue() {
 		return new Queue("${skorb.rabbitmq.queue.cart}", false);
+	}
+	
+	@Bean
+	Queue orderToProdQueue() {
+		return new Queue("${skorb.rabbitmq.queue.order}", false);
 	}
 	
 	@Bean
@@ -38,7 +43,12 @@ public class RabbitConfig {
 	
 	@Bean
 	Binding cartToProdBinding() {
-		return BindingBuilder.bind(CartToProdQueue()).to(exchange()).with("${skorb.rabbitmq.routingkey.cart}");
+		return BindingBuilder.bind(cartToProdQueue()).to(exchange()).with("${skorb.rabbitmq.routingkey.cart}");
+	}
+	
+	@Bean
+	Binding orderToProdBinding() {
+		return BindingBuilder.bind(orderToProdQueue()).to(exchange()).with("${skorb.rabbitmq.routingkey.order}");
 	}
 	
 	@Bean
