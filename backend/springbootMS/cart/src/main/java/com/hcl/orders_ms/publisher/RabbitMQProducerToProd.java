@@ -1,5 +1,7 @@
 package com.hcl.orders_ms.publisher;
 
+import com.hcl.orders_ms.config.CartWithProds;
+import com.hcl.orders_ms.config.ProdAck;
 import com.hcl.orders_ms.models.Cart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +14,7 @@ public class RabbitMQProducerToProd {
     @Value("${rabbitmq.exchange.name}")
     private String exchange;
 
-    @Value("${rabbitmq.routing.key.cart-to-order}")
+    @Value("${rabbitmq.routing.key}")
     private String routingKey;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQProducerToProd.class);
@@ -23,8 +25,8 @@ public class RabbitMQProducerToProd {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void sendMessage(Cart cart){
+    public void sendMessage(CartWithProds cartWithProds){
 //        LOGGER.info(String.format("Json message sent -> %s", cart.toString()));
-        rabbitTemplate.convertAndSend(exchange,routingKey,cart);
+        rabbitTemplate.convertAndSend(exchange,routingKey,cartWithProds);
     }
 }

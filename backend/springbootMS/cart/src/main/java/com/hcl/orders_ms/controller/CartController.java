@@ -39,7 +39,7 @@ public class CartController {
         }
         cartWithProds.setProds(map);
 
-        producer.sendMessage(cart);
+        producer.sendMessage(cartWithProds);
         return ResponseEntity.ok(cartWithProds + "are being sent to Producers");
     }
 
