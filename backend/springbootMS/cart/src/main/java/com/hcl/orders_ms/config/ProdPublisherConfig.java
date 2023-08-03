@@ -18,12 +18,12 @@ public class ProdPublisherConfig {
 
     @Bean
     public Queue queueToProd(){
-        return new Queue(queueToProd);
+        return new Queue(queueToProd,false);
     }
 
     @Bean
-    public TopicExchange exchange(){
-        return new TopicExchange(exchange);
+    public DirectExchange exchange(){
+        return new DirectExchange(exchange);
     }
 
     //bind que with exchange using routing key

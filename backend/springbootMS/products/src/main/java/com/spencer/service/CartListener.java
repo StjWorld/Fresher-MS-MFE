@@ -8,15 +8,14 @@ import org.springframework.stereotype.Component;
 
 import com.spencer.config.CartWithProds;
 import com.spencer.repo.ProductRepo;
+import org.springframework.stereotype.Service;
 
 @Component
 public class CartListener {
 	
 	@Autowired
 	ProductRepo repo;
-	
 	private final String queue = "cart-to-prod";
-	
 	@RabbitListener(queues = queue)
 	public void listen(CartWithProds message) {
 		CartWithProds cwp = new CartWithProds();
