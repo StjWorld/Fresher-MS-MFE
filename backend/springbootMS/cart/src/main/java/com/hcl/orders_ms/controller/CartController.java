@@ -4,7 +4,7 @@ import com.hcl.orders_ms.config.CartWithProds;
 import com.hcl.orders_ms.models.Cart;
 import com.hcl.orders_ms.models.CartItem;
 import com.hcl.orders_ms.publisher.ProducerToOrder;
-import com.hcl.orders_ms.publisher.RabbitMQProducerToProd;
+import com.hcl.orders_ms.publisher.ProducerToProd;
 import com.hcl.orders_ms.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class CartController {
     CartService cartService;
 
     @Autowired
-    private RabbitMQProducerToProd producer;
+    private ProducerToProd producer;
 
     @Autowired
     private ProducerToOrder producerToOrder;
@@ -55,8 +55,6 @@ public class CartController {
        List<Cart> cart = cartService.getAll();
        return ResponseEntity.ok(cart);
     }
-
-
 
     @PostMapping
    public ResponseEntity<Cart> createCart(@RequestBody Cart cart){

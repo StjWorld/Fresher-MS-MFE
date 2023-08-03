@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-public class PublisherConfig {
+public class OrderPublisherConfig {
 
     @Value("${rabbitmq.exchange.name}")
     private String exchange;

@@ -16,7 +16,7 @@ public class ProducerToOrder {
     @Value("${rabbitmq.routing.key.cart-to-order}")
     private String routingKey;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQProducerToProd.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProducerToProd.class);
 
     private RabbitTemplate rabbitTemplate;
 
