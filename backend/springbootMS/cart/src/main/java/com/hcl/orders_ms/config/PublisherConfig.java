@@ -26,12 +26,12 @@ public class PublisherConfig {
 
     @Bean
     public Queue queueToOrder(){
-        return new Queue(queue);
+        return new Queue(queue, false);
     }
 
     @Bean
-    public TopicExchange exchangeToOrder(){
-        return new TopicExchange(exchange);
+    public DirectExchange exchangeToOrder(){
+        return new DirectExchange(exchange);
     }
 
     //bind que with exchange using routing key

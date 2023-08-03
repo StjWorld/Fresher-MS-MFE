@@ -7,26 +7,22 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ProdPublisherConfig {
-    @Value("${rabbitmq.exchange.name}")
-    private String exchange;
-
-    @Value("${rabbitmq.queue.name}")
-    private String queueToProd;
-
-    @Value("${rabbitmq.routing.key}")
-    private String routingToProd;
+	
+    private String exchange = "some-exchange";
+    private String queueToProd = "cart-to-prod";
+    private String routingToProd = "cart-routingkey";
 
     @Bean
     public Queue queueToProd(){
-        return new Queue(queueToProd);
+        return new Queue(queueToProd, false);
     }
 
     @Bean
-    public TopicExchange exchange(){
-        return new TopicExchange(exchange);
+    public DirectExchange exchange(){
+        return new DirectExchange(exchange);
     }
 
-    //bind que with exchange using routing key
+    //bind queue with exchange using routing key
     @Bean
     public Binding bindingToProd(){
         return BindingBuilder.bind(queueToProd())
