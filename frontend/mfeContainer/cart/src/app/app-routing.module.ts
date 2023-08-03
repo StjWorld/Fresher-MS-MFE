@@ -12,7 +12,7 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 
 
 const routes: Routes = [
-{path: 'products/:id', component: ProductDetailsComponent},
+{path: 'products', component: ProductDetailsComponent},
 {path: 'cart-details', component: CartDetailsComponent},
 {path: 'checkout', component: CheckoutComponent},
 {path: 'order-history', component: OrderHistoryComponent},

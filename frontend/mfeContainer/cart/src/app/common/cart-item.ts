@@ -4,6 +4,7 @@ export class CartItem {
 
 
     id: string;
+    pId?: string;
     name: string;
     imageUrl: string;
     unitPrice: number;

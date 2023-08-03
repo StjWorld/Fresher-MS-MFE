@@ -11,4 +11,5 @@ export class Product {
     unitInStock!: number;
     dateCreated!: Date;
     lastUpdated!: Date;
+  private _embedded: any;
 }

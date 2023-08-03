@@ -4,17 +4,16 @@ import { CartItem } from '../common/cart-item';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
 
-  private cartUrl = environment.ecommerceUrl;
+  private cartUrl = environment.ecommerceUrl + "/api/cart";
   
   cartItems: CartItem[] = [];
-
-  isCartSaved: boolean = false;
 
   totalPrice: Subject<number> = new BehaviorSubject<number>(0);
   totalQuantity: Subject<number> = new BehaviorSubject<number>(0);
@@ -26,14 +25,6 @@ export class CartService {
 
     //read data from storage
     let data = JSON.parse(this.storage.getItem('cartItems')!);
-
-    this.isCartSaved = JSON.parse(this.storage.getItem('isCartSaved')!);
-
-    if(this.isCartSaved ==null)
-    {
-      this.isCartSaved = false;
-      this.storage.setItem('isCartSaved', JSON.stringify(this.isCartSaved));
-    }
 
     if(data != null){
       this.cartItems = data;
@@ -98,7 +89,6 @@ export class CartService {
 
   persistCartItems() {
     this.storage.setItem('cartItems', JSON.stringify(this.cartItems));
-    this.storage.setItem('isCartSaved', JSON.stringify(this.isCartSaved));
   }
 
 
@@ -106,8 +96,8 @@ export class CartService {
     console.log('Contents of the cart');
     for(let tempCartItem of this.cartItems){
       const subTotalPrice = tempCartItem.quantity * tempCartItem.unitPrice;
-      console.log(`name: ${tempCartItem.name}, quantity=${tempCartItem.quantity}, unitPrice=${tempCartItem.unitPrice}, subTotalPrice=${subTotalPrice}`);
-  
+      console.log(`name: ${tempCartItem.name}, quantity=${tempCartItem.quantity}, unitPrice=${tempCartItem.unitPrice}, subTotalPrice=${subTotalPrice},imgUrl=${tempCartItem.imageUrl}`);
+ 
     }
 
     console.log(`totalPrice: ${totalPriceValue.toFixed(2)}, totalQuantity: ${totalQuantityValue}`);
@@ -119,11 +109,7 @@ export class CartService {
     theCartItem.quantity--;
 
     if(theCartItem.quantity === 0) {
-      this.isCartSaved = false;
       this.remove(theCartItem);
-      this.isCartSaved = false;
-      this.storage.setItem('isCartSaved', JSON.stringify(this.isCartSaved));
-      this.deleteCart();
     }
     else {
       this.computeCartTotals();
@@ -132,45 +118,42 @@ export class CartService {
 
 
 createCart(): Observable<any> {
- 
-  this.isCartSaved = true;
 
-  console.log("cart items saved : ",this.isCartSaved);
+  console.log("cart items saved");
 
-  this.storage.setItem('isCartSaved', JSON.stringify(this.isCartSaved));
-
-  return this.httpClient.post<CartItem>(this.cartUrl + "/create-cart", this.cartItems);
+  return this.httpClient.post<CartItem>(this.cartUrl + "/create", this.cartItems);
 }
 
 updateCart(): Observable<any> {
- 
-  this.isCartSaved = true;
 
   console.log("cart items updated");
 
-  return this.httpClient.post<CartItem>(this.cartUrl + "/update-cart", this.cartItems);
+  return this.httpClient.post<CartItem>(this.cartUrl + "/update", this.cartItems);
 
 }
 
   remove(theCartItem: CartItem) {
     //get intex of item in the array
-    const itemIndex = this.cartItems.findIndex( tempCartItem => tempCartItem.id === theCartItem.id );
+    const itemIndex = this.cartItems.findIndex( tempCartItem => tempCartItem.id === theCartItem.id);
     //if found, remove the item from the array at the given index
     if(itemIndex > -1){
+      console.log("cart item is removed");
       this.cartItems.splice(itemIndex, 1);
-
       this.computeCartTotals();
+    }
+
+    // delete if remove item returns 0 value in cart
+    if(this.cartItems.length ==0){
+      this.deleteCart()
     }
   }
 
   deleteCart(): Observable<any>{
 
-  console.log("cart items saved : ",this.isCartSaved);
+  console.log("cart is deleted");
 
-  return this.httpClient.post<CartItem>(this.cartUrl + "/delete-cart", this.cartItems);
-
-}
+  return this.httpClient.post<CartItem>(this.cartUrl + "/delete", this.cartItems);
 
 }
 
-
+}

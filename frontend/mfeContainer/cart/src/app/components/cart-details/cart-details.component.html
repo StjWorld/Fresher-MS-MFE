@@ -69,15 +69,11 @@
                 <h4>Total Quantity: {{ totalQuantity }}</h4>
                 <h6>Shipping: FREE</h6>
                 <h6>Total Price: {{ totalPrice | currency: 'USD' }}</h6>
-                <div *ngIf="isCartSaved == false">no</div>
-                <div *ngIf="isCartSaved == true">yes</div>
-                <div *ngIf="isCartSaved == false" style="display: inline-block;margin-top: 1em;">
+        
+                <div style="display: inline-block;margin-top: 1em;">
                     <button style="width: 9em;height: 3em;" (click)="createCart()" class="btn btn-primary btn-sm">Save</button>
                 </div>
 
-                <div *ngIf="isCartSaved == true" style="display: inline-block;margin-top: 1em;">
-                    <button style="width: 9em;height: 3em;" (click)="updateCart()" class="btn btn-primary btn-sm">Update</button>
-                </div>
 
                 <div style="display: inline-block;margin-left: 1em;">
                     <a style="height: 2.6em; border-color: blue;" routerLink="/checkout" class="btn btn-fix">Checkout</a>
@@ -93,4 +89,3 @@
         </div>
     </div>
 </div>
-

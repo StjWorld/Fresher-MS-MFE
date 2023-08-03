@@ -12,15 +12,11 @@ export class CartDetailsComponent implements OnInit {
   cartItems: CartItem[] = [];
   totalPrice: number = 0;
   totalQuantity: number = 0;
-  isCartSaved!: boolean;
 
   constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
-    this.listCartDetails();
-    console.log("c "+this.cartService.isCartSaved);
-    this.isCartSaved = this.cartService.isCartSaved;
-     
+    this.listCartDetails(); 
   }
   listCartDetails() {
     //get a handle to the cart items

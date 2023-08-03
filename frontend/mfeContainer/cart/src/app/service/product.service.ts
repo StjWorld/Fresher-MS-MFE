@@ -10,15 +10,15 @@ import { environment } from 'src/environments/environment';
 export class ProductService {
 
 
-  private baseUrl = environment.ecommerceUrl + '/products';
+  private baseUrl = '/api/products';
 
 
   constructor(private httpClient: HttpClient) { }
 
-  getProduct(theProductId: number): Observable<Product> {
+  getProduct(): Observable<Product> {
     //build url based on product id
-    const productUrl = `${this.baseUrl}/${theProductId}`;
-    return this.httpClient.get<Product>(productUrl);
+    const productUrl = `${this.baseUrl}`;
+    return this.httpClient.get<Product>("/api/products");
   }
 
 
@@ -34,4 +34,3 @@ interface GetResponseProducts {
     products: Product[];
   }
 }
-

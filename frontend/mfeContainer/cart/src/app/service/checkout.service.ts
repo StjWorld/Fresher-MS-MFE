@@ -10,17 +10,17 @@ import { Purchase } from '../common/purchase';
 })
 export class CheckoutService {
 
-  private purchaseUrl = environment.ecommerceUrl + '/checkout/purchase';
+  private purchaseUrl = environment.ecommerceUrl + '/orders';
 
-  private paymentIntentUrl = environment.ecommerceUrl + '/checkout/payment-intent';
+  // private paymentIntentUrl = environment.ecommerceUrl + '/checkout/payment-intent';
 
   constructor(private httpClient: HttpClient) { }
 
   placeOrder(purchase: Purchase): Observable<any> {
-    return this.httpClient.post<Purchase>(this.purchaseUrl, purchase);
+    return this.httpClient.post<Purchase>(this.purchaseUrl + "/create", purchase);
   }
 
-  createPaymentIntent(paymentInfo: PaymentInfo): Observable<any> {
-    return this.httpClient.post<PaymentInfo>(this.paymentIntentUrl, paymentInfo);
-  }
+  // createPaymentIntent(paymentInfo: PaymentInfo): Observable<any> {
+  //   return this.httpClient.post<PaymentInfo>(this.paymentIntentUrl, paymentInfo);
+  // }
 }

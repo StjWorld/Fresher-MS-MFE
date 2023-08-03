@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   ecommerceUrl: "http://localhost:4200",
+  productUrl: "http://localhost:3000",
   // stripePublishableKey: "pk_test_51KfpTVAVStLNAELTHj4bFvix6sySvR19arB8g1xadof7eeWk2RqA9NOalOo4SNJtb5P1zCz5CbYVFDLPxF5X34S000hoxBuUmL"
 };
 
