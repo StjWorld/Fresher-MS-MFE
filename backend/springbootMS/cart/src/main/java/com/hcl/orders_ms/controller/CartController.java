@@ -31,11 +31,11 @@ public class CartController {
     public ResponseEntity<String> sendMessage(@RequestBody Cart cart){
         System.out.println("The cart: "+cart);
         CartWithProds cartWithProds = new CartWithProds();
-        HashMap<Long,Integer> map = new HashMap<>();
+        HashMap<Long,Long> map = new HashMap<>();
 
         cartWithProds.setCartId(cart.getId());
         for(CartItem cartItem: cart.getCartItems()){
-            map.put(cartItem.getProductId(), cartItem.getQuantity());
+            map.put(cartItem.getProductId(), Long.valueOf(cartItem.getQuantity()));
         }
         cartWithProds.setProds(map);
 
