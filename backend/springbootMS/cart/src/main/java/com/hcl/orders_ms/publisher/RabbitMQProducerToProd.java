@@ -1,6 +1,5 @@
 package com.hcl.orders_ms.publisher;
 
-import com.hcl.orders_ms.config.CartWithProds;
 import com.hcl.orders_ms.models.Cart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProducerToOrder {
-
+public class RabbitMQProducerToProd {
     @Value("${rabbitmq.exchange.name}")
     private String exchange;
 
@@ -21,7 +19,7 @@ public class ProducerToOrder {
 
     private RabbitTemplate rabbitTemplate;
 
-    public ProducerToOrder(RabbitTemplate rabbitTemplate){
+    public RabbitMQProducerToProd(RabbitTemplate rabbitTemplate){
         this.rabbitTemplate = rabbitTemplate;
     }
 
