@@ -1,7 +1,8 @@
 package com.hcl.orders_ms.controller;
 
 import com.hcl.orders_ms.models.Cart;
-import com.hcl.orders_ms.models.CartItem;
+import com.hcl.orders_ms.publisher.ProducerToOrder;
+import com.hcl.orders_ms.publisher.RabbitMQProducerToProd;
 import com.hcl.orders_ms.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,11 +18,33 @@ public class CartController {
     @Autowired
     CartService cartService;
 
+    @Autowired
+    private RabbitMQProducerToProd producer;
+
+    @Autowired
+    private ProducerToOrder producerToOrder;
+
+    @PostMapping("/purchase")
+    public ResponseEntity<String> sendMessage(@RequestBody Cart cart){
+        System.out.println("The cart: "+cart);
+        producer.sendMessage(cart);
+        return ResponseEntity.ok(cart + "are being sent to Producers");
+    }
+
+    @PostMapping("/sendToOrder")
+    public ResponseEntity<String> sendToOrder(@RequestBody Cart cart){
+        System.out.println("The cart: "+cart);
+        producerToOrder.sendMessage(cart);
+        return ResponseEntity.ok(cart + "are being sent to Order service");
+    }
+
     @GetMapping
     public ResponseEntity<List<Cart>> getAll(){
        List<Cart> cart = cartService.getAll();
        return ResponseEntity.ok(cart);
     }
+
+
 
     @PostMapping
    public ResponseEntity<Cart> createCart(@RequestBody Cart cart){

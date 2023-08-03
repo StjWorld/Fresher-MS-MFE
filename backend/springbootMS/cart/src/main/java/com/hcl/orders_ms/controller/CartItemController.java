@@ -17,7 +17,7 @@ public class CartItemController {
     @Autowired
     CartItemService cartItemService;
 
-    @PostMapping
+    @GetMapping
     public ResponseEntity<List<CartItem>> getAll(){
         List<CartItem> cartItems = cartItemService.getAll();
         return ResponseEntity.ok(cartItems);
