@@ -1,9 +1,15 @@
 package com.hcl.orders_ms.consumer;
 
+import com.hcl.orders_ms.config.CartWithProds;
 import com.hcl.orders_ms.config.ProdAck;
 import com.hcl.orders_ms.models.Cart;
+import com.hcl.orders_ms.models.CartItem;
 import com.hcl.orders_ms.publisher.ProducerToOrder;
 import com.hcl.orders_ms.repo.CartRepo;
+
+import java.util.HashMap;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -12,32 +18,47 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProdConsumer {
-    private static final Logger LOGGER
-            = LoggerFactory.getLogger(ProdConsumer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProdConsumer.class);
 
     @Autowired
     CartRepo cartRepo;
 
     @Autowired
     ProducerToOrder producerToOrder;
+    
     @RabbitListener(queues={"${rabbitmq.queue.name.prod}"})
     public void consumerJsonMessage(ProdAck prodAck){
-        LOGGER.info(String.format("Received JSON message -> %s",prodAck));
-
+        LOGGER.info(String.format("Received JSON message -> \n%s",prodAck));
+        
+        
+		
         //if stock is no problem, send message to order service.
         if(prodAck.isAck()){
-
-            Cart cart = cartRepo.findById(prodAck.getCartId()).get();
+        	Optional<Cart> cart = cartRepo.findById(prodAck.getCartId());
+        }
+        	/*
+        }
+        	Cart cart = cartRepo.findById(prodAck.getCartId()).get();
+        	
+        	CartWithProds cartWithProds = new CartWithProds();
+            HashMap<Long,Long> map = new HashMap<>();
+            
+            cartWithProds.setCartId(cart.getId());
+            for(CartItem cartItem: cart.getCartItems()){
+                map.put(cartItem.getProductId(), Long.valueOf(cartItem.getQuantity()));
+            }
+            cartWithProds.setProds(map);
 
             //send message order service
-            producerToOrder.sendMessage(cart);
-
+            //producerToOrder.sendMessage(cartWithProds);
             //Once sent to order service, delete the record from cart database;
             cartRepo.delete(cart);
-
+            
         }else{
-            System.out.println("return out of stock message...");
+            System.out.println("Unable to process order, reason:"+prodAck.getMessage());
         }
+        
+        */
 
     }
 }

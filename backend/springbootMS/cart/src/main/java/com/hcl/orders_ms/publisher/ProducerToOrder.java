@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProducerToOrder {
 
-    @Value("${rabbitmq.exchange.name}")
-    private String exchange;
+    //@Value("${rabbitmq.exchange.name}")
+    private String exchange = "some-exchange";
 
-    @Value("${rabbitmq.routing.key.cart-to-order}")
-    private String routingKey;
+    //@Value("${rabbitmq.routing.key.cart-to-order}")
+    private String routingKey = "cart-order-routingkey";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQProducerToProd.class);
 
@@ -25,8 +25,9 @@ public class ProducerToOrder {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void sendMessage(Cart cart){
+    public void sendMessage(CartWithProds cartWithProds){
 //        LOGGER.info(String.format("Json message sent -> %s", cart.toString()));
-        rabbitTemplate.convertAndSend(exchange,routingKey,cart);
+    	System.out.println("Sending message");
+        rabbitTemplate.convertAndSend(exchange,routingKey,cartWithProds);
     }
 }
