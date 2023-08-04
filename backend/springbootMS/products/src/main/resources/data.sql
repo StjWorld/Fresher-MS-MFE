@@ -91,10 +91,3 @@ drop table categories;
 drop table products;
 */
 
-
-
-
-
-
-
-

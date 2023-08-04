@@ -7,5 +7,5 @@ import lombok.Data;
 @Data
 public class CartWithProds {
 	private long cartId;
-	private HashMap<Long, Integer> prods; 
+	private HashMap<Long, Long> prods; 
 }
