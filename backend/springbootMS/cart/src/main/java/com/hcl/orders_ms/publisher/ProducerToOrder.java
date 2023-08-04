@@ -1,5 +1,6 @@
 package com.hcl.orders_ms.publisher;
 
+import com.hcl.orders_ms.config.CartWithProds;
 import com.hcl.orders_ms.models.Cart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

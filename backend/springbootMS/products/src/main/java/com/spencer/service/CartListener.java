@@ -21,7 +21,6 @@ public class CartListener {
 	RabbitSender sender;
 	
 	private final String queue = "cart-to-prod";
-	
 	@RabbitListener(queues = queue)
 	public void listen(CartWithProds message) {
 		CartWithProds cwp = new CartWithProds();
