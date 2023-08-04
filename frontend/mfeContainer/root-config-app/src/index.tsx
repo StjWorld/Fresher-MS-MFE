@@ -16,5 +16,11 @@ registerApplication({
   activeWhen: "/product"
 })
 
+registerApplication({
+  name: "cart",
+  app: (): Promise<LifeCycles> => (window as any).System.import("http://localhost:4200/main.js"),
+  activeWhen: "/cart"
+})
+// @single-spa-test/app-angular
 
 start();

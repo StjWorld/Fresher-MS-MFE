@@ -1,12 +1,8 @@
-// extra-webpack.config.js
-const fs = require('fs');
-const util = require('util');
-const webpack = require('webpack');
+const singleSpaAngularWebpack = require('single-spa-angular/lib/webpack').default;
 
-const readFile = util.promisify(fs.readFile);
+module.exports = (config, options) => {
+  const singleSpaWebpackConfig = singleSpaAngularWebpack(config, options);
 
-module.exports = readFile('./LICENSE', {
-  encoding: 'utf-8',
-}).then(license => ({
-  plugins: [new webpack.BannerPlugin(license)],
-}));
+  // Feel free to modify this webpack config however you'd like to
+  return singleSpaWebpackConfig;
+};

@@ -70,6 +70,9 @@ export default function Nav() {
                         <ListItem button onClick={() => handleClick('/product')} selected={selectedItem === "product"}>
                             <ListItemText primary="App Product" />
                         </ListItem>
+                        <ListItem button onClick={() => handleClick('/cart')} selected={selectedItem === "cart"}>
+                            <ListItemText primary="App Cart" />
+                        </ListItem>
                        
                     </List>
                 </div>
@@ -77,6 +80,7 @@ export default function Nav() {
             <main className={classes.content}>
                 <Toolbar />
                 <div id="single-spa-application:product"></div>
+                <div id="single-spa-application:cart"></div>
            
             </main>
         </div>
