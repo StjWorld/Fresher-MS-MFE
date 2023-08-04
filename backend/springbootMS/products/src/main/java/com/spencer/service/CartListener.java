@@ -46,6 +46,8 @@ public class CartListener {
 						//set flag=false, message="Product with pId = "+key+" doesn't have enough qty to fulfill order"
 						flag.set(false);
 						body.set(body.get()+"\nProduct with pId = "+key+" doesn't have enough qty to fulfill order");
+					}else {
+						body.set("Quantity of items confirmed");
 					}
 				}
 			} catch(Exception e) {

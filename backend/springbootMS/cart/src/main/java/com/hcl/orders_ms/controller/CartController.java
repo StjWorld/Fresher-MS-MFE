@@ -46,7 +46,16 @@ public class CartController {
     @PostMapping("/sendToOrder")
     public ResponseEntity<String> sendToOrder(@RequestBody Cart cart){
         System.out.println("The cart: "+cart);
-        producerToOrder.sendMessage(cart);
+        CartWithProds cartWithProds = new CartWithProds();
+        HashMap<Long,Long> map = new HashMap<>();
+        
+        cartWithProds.setCartId(cart.getId());
+        for(CartItem cartItem: cart.getCartItems()){
+            map.put(cartItem.getProductId(), Long.valueOf(cartItem.getQuantity()));
+        }
+        cartWithProds.setProds(map);
+        
+        producerToOrder.sendMessage(cartWithProds);
         return ResponseEntity.ok(cart + "are being sent to Order service");
     }
 
