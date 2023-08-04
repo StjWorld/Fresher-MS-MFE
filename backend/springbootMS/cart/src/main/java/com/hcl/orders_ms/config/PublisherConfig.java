@@ -26,7 +26,7 @@ public class PublisherConfig {
 
     @Bean
     public Queue queueToOrder(){
-        return new Queue(queue,false);
+        return new Queue(queue, false);
     }
 
     @Bean

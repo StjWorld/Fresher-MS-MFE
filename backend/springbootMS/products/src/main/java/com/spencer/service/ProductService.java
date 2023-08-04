@@ -33,9 +33,6 @@ public class ProductService {
 	}
 
 	public Product createProd(Product product) {	
-		// remove send.sendMessage for normal operation
-		// send.sendMessage(Product) is for testing purposes 
-		send.sendMessage(repo.save(product));
 		return product;
 	}
 

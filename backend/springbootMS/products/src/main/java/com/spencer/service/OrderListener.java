@@ -1,32 +1,32 @@
 package com.spencer.service;
 
-import java.util.HashMap;
+import java.util.Optional;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.spencer.repo.ProductRepo;
+import com.spencer.config.InventoryUpdate;
+import com.spencer.entity.Product;
 
 @Component
 public class OrderListener {
 	
 	@Autowired
-	ProductRepo repo;
+	ProductService service;
 	
 	private final String queue = "order-to-prod";
 	
 	@RabbitListener(queues = queue)
-	public void listen(HashMap<Long,Long> message) {
-		// For testing, to be replaced
-		HashMap<Long,Long> prods = new HashMap<Long, Long>();
+	public void listen(InventoryUpdate message) {
 		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			message.getProds().forEach((key, value) ->{
+				Optional<Product> prod = service.getProductById(key);
+				prod.get().setQty(prod.get().getQty()-value);
+				service.updateProd(prod.get());
+			});
+		}catch(Exception e) {
+			System.out.println(e);
 		}
-		System.out.println("pIds: "+message.keySet()+"\nQtys: "+message.values());
-		// end of testing, to be replaced
-		
 	}
 }

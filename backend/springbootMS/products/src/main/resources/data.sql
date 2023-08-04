@@ -84,17 +84,10 @@ order by p.pid;
 /*#########################################################################################################################
 #                                          Drop tables for cleanup                                                        #
 #########################################################################################################################*/
+/*
+drop table product_to_category;
+drop table reviews;
+drop table categories;
+drop table products;
+*/
 
-
-
-
-
-
-
-
-
-
--- drop table product_to_category if exists;
--- drop table reviews;
--- drop table categories;
--- drop table products;
