@@ -9,10 +9,4 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface CartItemRepo extends JpaRepository<CartItem, Long> {
-
-    @Modifying
-    @Query("DELETE FROM Cart c WHERE c.id = ?1")
-    void deleteByCart(Long cartId);
-
-
 }

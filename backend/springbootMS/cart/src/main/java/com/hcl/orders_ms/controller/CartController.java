@@ -5,7 +5,11 @@ import com.hcl.orders_ms.models.Cart;
 import com.hcl.orders_ms.models.CartItem;
 import com.hcl.orders_ms.publisher.ProducerToOrder;
 import com.hcl.orders_ms.publisher.RabbitMQProducerToProd;
+import com.hcl.orders_ms.service.CartItemService;
 import com.hcl.orders_ms.service.CartService;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +24,7 @@ import java.util.Optional;
 public class CartController {
     @Autowired
     CartService cartService;
-
+    
     @Autowired
     private RabbitMQProducerToProd producer;
 
@@ -61,17 +65,24 @@ public class CartController {
 
     @GetMapping
     public ResponseEntity<List<Cart>> getAll(){
-       List<Cart> cart = cartService.getAll();
-       return ResponseEntity.ok(cart);
+    	List<Cart> cart = cartService.getAll();
+    	return ResponseEntity.ok(cart);
     }
 
-
-
     @PostMapping
-   public ResponseEntity<Cart> createCart(@RequestBody Cart cart){
-        Cart createdCart = cartService.createCart(cart);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdCart);
-   }
+    public ResponseEntity<Cart> createCart(@RequestBody String cart){
+    	Cart toMake = new Cart();
+    	JSONParser parse = new JSONParser();
+    	try {
+    		JSONObject thing = (JSONObject)parse.parse(cart);
+        	List<JSONObject> inner = (List<JSONObject>) thing.get("cartItems");
+        	
+        	toMake = cartService.createCart((Long)thing.get("id"), inner);
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    	}
+        return new ResponseEntity<Cart>(toMake, HttpStatus.CREATED);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Cart> getCartById(@PathVariable("id")Long id){

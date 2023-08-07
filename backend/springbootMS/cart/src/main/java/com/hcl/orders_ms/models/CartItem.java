@@ -1,7 +1,11 @@
 package com.hcl.orders_ms.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,28 +14,21 @@ import lombok.NoArgsConstructor;
 @Table(name="cart_item")
 @Data
 @NoArgsConstructor
-
+@AllArgsConstructor
 public class CartItem {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="item_id")
+    @Column(name="itemId")
     private Long itemId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="cart_id")
-    @JsonIgnore
-    private Cart cart;
+    @Column(name="pId")
+    private Long productId;
 
-    @Column
-    private long productId;
+    @Column(name="quantity")
+    private Integer quantity;
 
-    @Column
-    private int quantity;
-
-    public CartItem(int productId, int quantity){
-        this.productId = productId;
-        this.quantity = quantity;
-    }
-
+    @Column(name="cartId")
+    private Long cart;
 
 }
