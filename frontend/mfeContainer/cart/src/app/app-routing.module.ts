@@ -4,15 +4,24 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { CartDetailsComponent } from './components/cart-details/cart-details.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ProductService } from './service/product.service';
 
 
-// const routes: Routes = [{path: 'product', component: ProductDetailsComponent}];
+const routes: Routes = [
+  {path: 'products', component: ProductDetailsComponent},
+  {path: 'cart', component: CartDetailsComponent}
+];
 // RouterModule.forRoot(routes),
 @NgModule({
   imports: [
+    RouterModule.forRoot(routes),
     HttpClientModule,
-    BrowserModule],
+    BrowserModule,
+    ReactiveFormsModule],
   exports: [RouterModule],
+  providers: [ProductService],
   bootstrap: [AppComponent]
 })
 export class AppRoutingModule { }

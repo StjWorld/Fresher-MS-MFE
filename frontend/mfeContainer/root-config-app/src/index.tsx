@@ -12,7 +12,7 @@ ReactDOM.render(
 
 registerApplication({
   name: "product",
-  app: (): Promise<LifeCycles> => (window as any).System.import("http://localhost:8081/spa-product-product.js"),
+  app: (): Promise<LifeCycles> => (window as any).System.import("http://localhost:8080/spa-product-product.js"),
   activeWhen: "/product"
 })
 

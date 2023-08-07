@@ -26,8 +26,7 @@ const lifecycles = singleSpaAngular({
   NgZone : NgZone,
 });
 
-// platformBrowserDynamic().bootstrapModule(AppModule)
-//   .catch(err => console.error(err));
+
 
 export const bootstrap = lifecycles.bootstrap;
 export const mount = lifecycles.mount;
