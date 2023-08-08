@@ -47,24 +47,6 @@ public class CartController {
         return ResponseEntity.ok(cartWithProds + "are being sent to Producers");
     }
     
-    /*
-	@PostMapping("/sendToOrder")
-	public ResponseEntity<String> sendToOrder(@RequestBody Cart cart){
-	    System.out.println("The cart: "+cart);
-	    CartWithProds cartWithProds = new CartWithProds();
-	    HashMap<Long,Long> map = new HashMap<>();
-	    
-	    cartWithProds.setCartId(cart.getId());
-	    for(CartItem cartItem: cart.getCartItems()){
-	        map.put(cartItem.getProductId(), Long.valueOf(cartItem.getQuantity()));
-	    }
-	    cartWithProds.setProds(map);
-	    
-	    producerToOrder.sendMessage(cartWithProds);
-	    return ResponseEntity.ok(cart + "are being sent to Order service");
-	}
-     */
-    
     @GetMapping
     public ResponseEntity<List<Cart>> getAll(){
     	List<Cart> cart = cartService.getAll();
@@ -80,6 +62,21 @@ public class CartController {
         	List<JSONObject> inner = (List<JSONObject>) thing.get("cartItems");
         	
         	toMake = cartService.createCart((Long)thing.get("id"), inner);
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    	}
+        return new ResponseEntity<Cart>(toMake, HttpStatus.CREATED);
+    }
+    
+    @PostMapping("/{id}")
+    public ResponseEntity<Cart> updateCart(@PathVariable("id")Long id, @RequestBody String cart){
+    	Cart toMake = new Cart();
+    	JSONParser parse = new JSONParser();
+    	try {
+    		JSONObject thing = (JSONObject)parse.parse(cart);
+        	List<JSONObject> inner = (List<JSONObject>) thing.get("cartItems");
+        	
+        	toMake = cartService.updateCart(id, inner);
     	}catch(Exception e) {
     		e.printStackTrace();
     	}

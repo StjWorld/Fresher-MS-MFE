@@ -1,5 +1,6 @@
 package com.hcl.orders_ms.models;
 
+import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
