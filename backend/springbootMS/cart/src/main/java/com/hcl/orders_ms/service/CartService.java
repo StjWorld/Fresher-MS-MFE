@@ -25,9 +25,6 @@ public class CartService {
     @Autowired
     CartRepo cartRepo;
 
-    @Autowired
-    CartItemRepo cartItemRepo;
-
     public List<Cart> getAll(){
         List<Cart> ordersList = cartRepo.findAll();
         if (ordersList.size() > 0) {
@@ -63,9 +60,12 @@ public class CartService {
 
     public void deleteCart(Long id) {
         if(cartRepo.findById(id).isPresent()) {
+        	List<CartItem> toDelete = itemService.getByCartId(id);
+        	toDelete.forEach(item->{
+        		itemService.deleteItem(item.getItemId());
+        	});
         	cartRepo.deleteById(id);
         }
-            
     }
 
 	public Cart updateCart(Long id, List<JSONObject> inner) {
