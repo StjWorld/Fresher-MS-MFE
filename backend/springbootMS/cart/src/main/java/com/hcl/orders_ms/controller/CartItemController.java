@@ -23,7 +23,6 @@ public class CartItemController {
         return ResponseEntity.ok(cartItems);
     }
 
-
     @PutMapping
     public ResponseEntity<CartItem> updateCart(CartItem cartItem){
         cartItemService.updateCart(cartItem);
