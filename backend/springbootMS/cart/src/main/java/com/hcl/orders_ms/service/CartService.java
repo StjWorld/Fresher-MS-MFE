@@ -94,7 +94,7 @@ public class CartService {
 			items.forEach(x->{
 				itemMap.put(x.getProductId(), x.getItemId());
 			});
-			if(items.size()>0) {
+			if(!items.isEmpty()) {
 				toUpdate.forEach(bin ->{
 					//if cart item exists, saveAndFlush;
 					if(itemMap.containsKey(bin.getProductId())) {
@@ -108,7 +108,7 @@ public class CartService {
 						}
 					}else {
 						//if cart item does not exist and has quantity > 0, save;
-						if(bin.getQuantity()>1) {
+						if(bin.getQuantity()>0) {
 							itemService.createItem(bin);
 						}else {
 							toRemove.add(bin);

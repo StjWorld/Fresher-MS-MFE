@@ -68,7 +68,7 @@ public class CartController {
         return new ResponseEntity<Cart>(toMake, HttpStatus.CREATED);
     }
     
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Cart> updateCart(@PathVariable("id")Long id, @RequestBody String cart){
     	Cart toMake = new Cart();
     	JSONParser parse = new JSONParser();
