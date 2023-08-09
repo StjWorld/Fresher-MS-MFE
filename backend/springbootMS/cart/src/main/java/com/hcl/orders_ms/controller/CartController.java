@@ -6,8 +6,6 @@ import com.hcl.orders_ms.models.CartItem;
 import com.hcl.orders_ms.publisher.RabbitMQProducerToProd;
 import com.hcl.orders_ms.service.CartService;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +35,8 @@ public class CartController {
             map.put(cartItem.getProductId(), Long.valueOf(cartItem.getQuantity()));
         }
         cartWithProds.setProds(map);
-
+        
+        System.out.println("Sending {"+cartWithProds+"} to Product MS");
         producer.sendMessage(cartWithProds);
 
         return ResponseEntity.ok(cartWithProds + " is being sent to Producers");
@@ -54,24 +53,17 @@ public class CartController {
     @PostMapping("/create")
     public ResponseEntity<Cart> createCart(@RequestBody Cart cart){
 
-    	System.out.println("hello" + cart);
-    	Cart toMake = new Cart();
-    	JSONParser parse = new JSONParser();
-    	cartService.createCart(cart);
+    	Cart toMake = cartService.createCart(cart);
 
-        return new ResponseEntity<Cart>(new Cart(), HttpStatus.CREATED);
+        return new ResponseEntity<Cart>(toMake, HttpStatus.CREATED);
     }
 
     
     @PutMapping("/{id}")
-    public ResponseEntity<Cart> updateCart(@PathVariable("id")Long id, @RequestBody String cart){
+    public ResponseEntity<Cart> updateCart(@PathVariable("id")Long id, @RequestBody Cart cart){
     	Cart toMake = new Cart();
-    	JSONParser parse = new JSONParser();
-    	try {
-    		JSONObject thing = (JSONObject)parse.parse(cart);
-        	List<JSONObject> inner = (List<JSONObject>) thing.get("cartItems");
-        	
-        	toMake = cartService.updateCart(id, inner);
+    	try {        	
+        	toMake = cartService.updateCart(cart.getId(), cart.getCartItems());
     	}catch(Exception e) {
     		e.printStackTrace();
     	}

@@ -2,7 +2,6 @@ package com.hcl.orders_ms.consumer;
 
 import com.hcl.orders_ms.config.CartWithProds;
 import com.hcl.orders_ms.config.ProdAck;
-import com.hcl.orders_ms.models.Cart;
 import com.hcl.orders_ms.models.CartItem;
 import com.hcl.orders_ms.publisher.ProducerToOrder;
 import com.hcl.orders_ms.service.CartItemService;
@@ -11,7 +10,7 @@ import com.hcl.orders_ms.service.CartService;
 import jakarta.transaction.Transactional;
 
 import java.util.HashMap;
-import java.util.Optional;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,28 +39,30 @@ public class ProdConsumer {
         //if stock is no problem, send message to order service.
         if(prodAck.isAck()){
         	try {
-        		Optional<Cart> cart = service.getCartById(prodAck.getCartId());
-        		if(cart.isPresent()) {
+        		List<CartItem> cart = itemService.getByCartId(prodAck.getCartId());
+        		System.out.println("The cart: "+cart);
+        		if(!cart.isEmpty()) {
         			CartWithProds cartWithProds = new CartWithProds();
                     HashMap<Long,Long> map = new HashMap<>();
     
-                    cartWithProds.setCartId(cart.get().getId());
-                    for(CartItem cartItem: cart.get().getCartItems()){
-                        map.put(cartItem.getProductId(), Long.valueOf(cartItem.getQuantity()));
-                    }
+                    cartWithProds.setCartId(prodAck.getCartId());
+                    cart.forEach(item->{
+                    	map.put(item.getProductId(), Long.valueOf(item.getQuantity()));
+                    });
                     cartWithProds.setProds(map);
 
                     //send message order service
+                    System.out.println("Sending {"+cartWithProds+"} to Order MS");
                     producerToOrder.sendMessage(cartWithProds);        			
 
                     //Once sent to order service, delete the record from cart database;
                     // Had to compound deleting from cart_item database since databases are decoupled
                     // Query for deleting by cartId (one call instead of many):
                     //		DELETE FROM cart_item c WHERE c.cart_id = ?1
-                    cart.get().getCartItems().forEach(item ->{
+                    cart.forEach(item ->{
                     	itemService.deleteItem(item.getItemId());
                     });
-                    service.deleteCart(cart.get().getId());
+                    service.deleteCart(prodAck.getCartId());
                     
         		}else {
         			System.out.println("Cart not found");

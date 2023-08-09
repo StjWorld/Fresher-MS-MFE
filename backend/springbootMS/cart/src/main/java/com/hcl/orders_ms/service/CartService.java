@@ -2,12 +2,9 @@ package com.hcl.orders_ms.service;
 
 import com.hcl.orders_ms.models.Cart;
 import com.hcl.orders_ms.models.CartItem;
-import com.hcl.orders_ms.repo.CartItemRepo;
 import com.hcl.orders_ms.repo.CartRepo;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.JsonParser;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -43,7 +40,9 @@ public class CartService {
         newCart.setCartItems(cart.getCartItems());
         newCart.setCartDate(new Date());
 
-       newCart.getCartItems().forEach(item->{itemService.createItem(item);});
+        newCart.getCartItems().forEach(item->{
+        	item.setCart(cart.getId());
+        	itemService.createItem(item);});
         
         return cartRepo.save(newCart);
         //return cartRepo.save(newCart);
@@ -59,17 +58,11 @@ public class CartService {
         }
     }
 
-	public Cart updateCart(Long id, List<JSONObject> inner) {
+	public Cart updateCart(Long id, List<CartItem> list) {
 		//create List<CartItem> from request body
-		List<CartItem> toUpdate = new ArrayList<>();
+		List<CartItem> toUpdate = list;
 		List<CartItem> toRemove = new ArrayList<>();
-		inner.forEach(bin->{
-        	CartItem item = new CartItem();
-        	item.setProductId((long)bin.get("productId"));
-        	item.setQuantity(Integer.parseInt(bin.get("quantity").toString()));
-        	item.setCart(id);
-        	toUpdate.add(item);
-		});
+		
 		//find cart by id;
 		Optional<Cart> cart = cartRepo.findById(id);
 		if(!cart.isPresent()) {
@@ -87,6 +80,7 @@ public class CartService {
 			});
 			if(!items.isEmpty()) {
 				toUpdate.forEach(bin ->{
+					bin.setCart(id);
 					//if cart item exists, saveAndFlush;
 					if(itemMap.containsKey(bin.getProductId())) {
 						//item quantity moved to zero -> delete item

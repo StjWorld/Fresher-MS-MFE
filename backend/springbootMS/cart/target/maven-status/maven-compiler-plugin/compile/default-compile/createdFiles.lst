@@ -1,4 +1,5 @@
 com\hcl\orders_ms\models\Cart.class
+com\hcl\orders_ms\config\DevCorsConfiguration.class
 com\hcl\orders_ms\models\CartItem.class
 com\hcl\orders_ms\config\ProdPublisherConfig.class
 com\hcl\orders_ms\controller\CartItemController.class

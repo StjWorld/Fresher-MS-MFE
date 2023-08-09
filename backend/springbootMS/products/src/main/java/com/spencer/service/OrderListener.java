@@ -25,6 +25,7 @@ public class OrderListener {
 		try {
 			message.getProds().forEach((key, value) ->{
 				Optional<Product> prod = service.getProductById(key);
+				System.out.println("Updating product with pId: "+prod.get().getPId()+" qty: "+prod.get().getQty()+" -> "+(prod.get().getQty()-value));
 				prod.get().setQty(prod.get().getQty()-value);
 				service.updateProd(prod.get());
 			});
