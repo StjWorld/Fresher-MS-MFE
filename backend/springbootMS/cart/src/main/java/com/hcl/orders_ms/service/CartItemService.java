@@ -24,17 +24,9 @@ public class CartItemService {
     public CartItem updateCart(CartItem cartItem){
         return cartItemRepo.save(cartItem);
     }
-    public void deleteByCartId(Long id){
-        cartItemRepo.deleteByCart(id);
-    }
 
     public void deleteItem(Long id){
         cartItemRepo.deleteById(id);
     }
-//    public List<CartItem> findItemsByCartId(Long id){
-//
-//        return cartItemRepo.findByCart(id);
-//    }
-
 
 }

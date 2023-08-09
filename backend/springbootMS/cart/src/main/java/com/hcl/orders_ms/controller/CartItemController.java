@@ -17,22 +17,15 @@ public class CartItemController {
     @Autowired
     CartItemService cartItemService;
 
-    @PostMapping
+    @GetMapping
     public ResponseEntity<List<CartItem>> getAll(){
         List<CartItem> cartItems = cartItemService.getAll();
         return ResponseEntity.ok(cartItems);
     }
 
-
     @PutMapping
     public ResponseEntity<CartItem> updateCart(CartItem cartItem){
         cartItemService.updateCart(cartItem);
-        return ResponseEntity.noContent().build();
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<CartItem> deleteCart(@PathVariable Long id){
-        cartItemService.deleteByCartId(id);
         return ResponseEntity.noContent().build();
     }
 

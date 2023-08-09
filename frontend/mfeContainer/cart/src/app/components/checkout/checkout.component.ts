@@ -10,6 +10,7 @@ import { CartService } from 'src/app/service/cart.service';
 import { CheckoutService } from 'src/app/service/checkout.service';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { CartItems } from 'src/app/common/cart-items';
 
 @Component({
   selector: 'app-checkout',
@@ -18,6 +19,7 @@ import { Router } from '@angular/router';
 })
 export class CheckoutComponent implements OnInit {
 
+  cartitems: CartItems[] =[];
   checkoutFormGroup!: FormGroup;
 
   totalPrice: number = 0;
@@ -133,7 +135,9 @@ export class CheckoutComponent implements OnInit {
 
 
     // - short way of doing the same thing
-    let orderItems: OrderItem[] = cartItems.map(tempCartItem => new OrderItem(tempCartItem));
+    // let orderItems: OrderItem[] = cartItems.map(tempCartItem => new OrderItem(tempCartItem));
+
+    let cartitems = cartItems.map(tempCartItem => new CartItems(tempCartItem));
 
     // set up purchase
     let purchase = new Purchase();
@@ -141,15 +145,15 @@ export class CheckoutComponent implements OnInit {
 
     
     // populate purchase - shipping address
-    purchase.shippingAddress = this.checkoutFormGroup.controls['shippingAddress'].value;
+    // purchase.shippingAddress = this.checkoutFormGroup.controls['shippingAddress'].value;
 
   
     // populate purchase - order and orderItems
-    purchase.order = order;
-    purchase.orderItems = orderItems;
+    // purchase.order = order;
+    // purchase.orderItems = orderItems;
 
     //compute payment info
-    this.paymentInfo.amount = Math.round(this.totalPrice * 100);
+    this.paymentInfo.amount = this.totalPrice;
     this.paymentInfo.currency = "USD";
     // this.paymentInfo.receiptEmail = purchase.customer.email;
 
@@ -162,6 +166,12 @@ export class CheckoutComponent implements OnInit {
     // if(!this.checkoutFormGroup.invalid && this.displayError.textContext === "") {
       
       this.isDisabled = true;
+
+      purchase.id =cartitems[0].cart;
+      purchase.cartDate = new Date();
+
+      purchase.cartItems = cartitems;
+
 
  
     //call REST API via the CheckoutService
@@ -181,7 +191,7 @@ export class CheckoutComponent implements OnInit {
           this.checkoutFormGroup.reset();
       
           // navigate back to the products page
-          this.router.navigateByUrl("/cart-details");
+          this.router.navigateByUrl("/cart");
 
 
         },

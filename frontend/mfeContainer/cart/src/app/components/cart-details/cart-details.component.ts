@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CartItem } from 'src/app/common/cart-item';
+import { CartItems } from 'src/app/common/cart-items';
 import { Product } from 'src/app/common/product';
+import { Purchase } from 'src/app/common/purchase';
 import { CartService } from 'src/app/service/cart.service';
 import { ProductService } from 'src/app/service/product.service';
 import { assetUrl } from 'src/single-spa/asset-url';
@@ -13,7 +15,8 @@ import { assetUrl } from 'src/single-spa/asset-url';
 })
 export class CartDetailsComponent implements OnInit {
 
-  cartItems: CartItem[] = [];
+  cartItems: CartItem[] =[];
+  cartBackendItems: CartItems[] =[];
   totalPrice: number = 0;
   totalQuantity: number = 0;
   product: Product = new Product();
@@ -64,7 +67,43 @@ export class CartDetailsComponent implements OnInit {
   }
 
   createCart(){
-    this.cartService.createCart();
+    // get cart items
+    const cartItems = this.cartService.cartItems;
+
+    // - short way of doing the same thing
+    // let orderItems: OrderItem[] = cartItems.map(tempCartItem => new OrderItem(tempCartItem));
+
+    let cartBackendItems = cartItems.map(tempCartItem => new CartItems(tempCartItem));
+
+    let purchase = new Purchase();
+
+    purchase.id = cartBackendItems[0].cart;
+    purchase.cartDate = new Date();
+    purchase.cartItems = cartBackendItems;
+
+    this.cartService.createCart(purchase).subscribe(
+      {
+      next:response => {
+        // alert(`Your order has been recieved.\nOrder tracking number: ${response.orderTrackingNumber}`)
+        
+        
+        //reset cart
+        // this.cartService.cartItems = [];
+        // this.cartService.totalPrice.next(0);
+        // this.cartService.totalQuantity.next(0);
+        // this.cartService.persistCartItems();
+    
+      
+    
+        // navigate back to the products page
+        // this.router.navigateByUrl("/cart");
+
+
+      },
+      error: err => {
+        alert(`There was an error: ${err.message}`);
+      }
+  });
   }
 
   updateCart(){

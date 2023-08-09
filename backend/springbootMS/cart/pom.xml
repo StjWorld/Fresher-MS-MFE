@@ -14,7 +14,7 @@
 	<name>orders_ms</name>
 	<description>order service back-end</description>
 	<properties>
-		<java.version>20</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -41,11 +41,27 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+	   <dependency>
+	      <groupId>com.googlecode.json-simple</groupId>
+	      <artifactId>json-simple</artifactId>
+	      <version>1.1.1</version>
+	   </dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.13.2</version>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
 	</dependencies>
 

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, catchError, of } from 'rxjs';
 import { CartItem } from '../common/cart-item';
-import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Purchase } from '../common/purchase';
 
 
 @Injectable({
@@ -11,8 +11,8 @@ import { HttpClient } from '@angular/common/http';
 export class CartService {
 
 
-  private cartUrl = environment.ecommerceUrl + "/api/cart";
-  
+  private cartUrl = "http://localhost:8082/api/carts/create";
+ 
   cartItems: CartItem[] = [];
 
   totalPrice: Subject<number> = new BehaviorSubject<number>(0);
@@ -20,6 +20,7 @@ export class CartService {
 
   //storage: Storage = localStorage;
   storage: Storage = sessionStorage;
+  errorMessage: any;
 
   constructor(private httpClient: HttpClient) {
 
@@ -96,11 +97,11 @@ export class CartService {
     console.log('Contents of the cart');
     for(let tempCartItem of this.cartItems){
       const subTotalPrice = tempCartItem.quantity * tempCartItem.unitPrice;
-      console.log(`name: ${tempCartItem.name}, quantity=${tempCartItem.quantity}, unitPrice=${tempCartItem.unitPrice}, subTotalPrice=${subTotalPrice},imgUrl=${tempCartItem.imageUrl}`);
+      console.log(`orderId: ${tempCartItem.orderId}`,`productId: ${tempCartItem.id}`,`name: ${tempCartItem.name}, quantity=${tempCartItem.quantity}, unitPrice=$${tempCartItem.unitPrice}, subTotalPrice=$${subTotalPrice},imgUrl=${tempCartItem.imageUrl}`);
  
     }
 
-    console.log(`totalPrice: ${totalPriceValue.toFixed(2)}, totalQuantity: ${totalQuantityValue}`);
+    console.log(`totalPrice: $${totalPriceValue.toFixed(2)}, totalQuantity: ${totalQuantityValue}`);
     console.log('-----')
   }
 
@@ -117,11 +118,14 @@ export class CartService {
 }
 
 
-createCart(): Observable<any> {
+createCart(purchase:Purchase): Observable<any> {
 
   console.log("cart items saved");
 
-  return this.httpClient.post<CartItem>(this.cartUrl + "/create", this.cartItems);
+  console.log(purchase);
+
+  return this.httpClient.post<Purchase>("http://localhost:8082/api/carts/create", purchase);
+
 
 }
 
@@ -129,7 +133,7 @@ updateCart(): Observable<any> {
 
   console.log("cart items updated");
 
-  return this.httpClient.post<CartItem>(this.cartUrl + "/update", this.cartItems);
+  return this.httpClient.post<CartItem>(this.cartUrl, this.cartItems);
 
 }
 
@@ -156,5 +160,6 @@ updateCart(): Observable<any> {
   return this.httpClient.post<CartItem>(this.cartUrl + "/delete", this.cartItems);
 
 }
+
 
 }

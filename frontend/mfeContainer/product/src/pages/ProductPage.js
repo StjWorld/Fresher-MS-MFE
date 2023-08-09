@@ -57,10 +57,10 @@ const ProductPage = () => {
                     }
                 }
                 setProducts(tempPrd);
-                
+
                 if(sessionStorage.getItem("cartItems")!=null){
                     setLocalCart(JSON.parse(sessionStorage.getItem("cartItems")));
-                    console.log("hello" + localCart.length);
+                    console.log("loading cart session: " + localCart.length);
                 }
                 
             }catch(error) {
@@ -109,7 +109,7 @@ const ProductPage = () => {
             quantity: 1,
             inStock : selection.qty,
             unitPrice :selection.price,
-            imageUrl: "http://localhost:4200/assets" + selection.imgUrl
+            imageUrl: "http://localhost:4200/assets/images/" + selection.imgUrl
         };
 
         let boolVal = localCart.find((element) => {
@@ -169,20 +169,22 @@ const ProductPage = () => {
                     {!loading && (
                       
                         products.map((displayObject) =>(
-
                              <Grid xs={4}  key={displayObject.pid}>
                            
                             <Card style={{ width: '18rem', display:"inline-block" }}>
-                            <Card.Img variant="top" src={require('../assets' + displayObject.imgUrl)} />
+                            <Card.Img variant="top" src={require('../assets/images/' + displayObject.imgUrl)} />
                             <Card.Body>
-                            <Card.Title>  {displayObject.name}</Card.Title>
+                            <Card.Title>  {displayObject.pname}</Card.Title>
                               <Card.Text>
-                              {displayObject.description}
+                              {displayObject.pdesc}
                               </Card.Text>
                               <Card.Text>
                               ${displayObject.price}
+                         
                               </Card.Text>
+                
                               <Button  onClick={() => handleAdd(displayObject)} variant="primary">ADD TO CART</Button>
+                        
                               </Card.Body>
                             </Card>
                             </Grid>

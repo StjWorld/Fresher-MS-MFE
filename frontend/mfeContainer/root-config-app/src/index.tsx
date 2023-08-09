@@ -10,6 +10,8 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
+// register routing paths with container
+
 registerApplication({
   name: "product",
   app: (): Promise<LifeCycles> => (window as any).System.import("http://localhost:8080/spa-product-product.js"),
@@ -21,6 +23,26 @@ registerApplication({
   app: (): Promise<LifeCycles> => (window as any).System.import("http://localhost:4200/main.js"),
   activeWhen: "/cart"
 })
-// @single-spa-test/app-angular
+
+
+registerApplication({
+  name: "checkout",
+  app: (): Promise<LifeCycles> => (window as any).System.import("http://localhost:4200/main.js"),
+  activeWhen: "/checkout"
+})
+// registerApplication({
+//   name: "purchase",
+//   app: (): Promise<LifeCycles> => (window as any).System.import("http://localhost:4200/main.js"),
+//   activeWhen: "/api/carts/purchase"
+// })
+
+// registerApplication({
+//   name: "create",
+//   app: (): Promise<LifeCycles> => (window as any).System.import("http://localhost:4200/main.js"),
+//   activeWhen: "/api/carts/create"
+// })
+
+
+
 
 start();

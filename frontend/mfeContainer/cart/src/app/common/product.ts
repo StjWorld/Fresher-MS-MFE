@@ -1,6 +1,7 @@
 export class Product {
 
     id!: string;
+    orderId!:number;
     sku!: string;
     name!: string;
     description!: string;

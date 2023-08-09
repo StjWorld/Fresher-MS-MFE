@@ -14,6 +14,9 @@ public class ProductService {
 	
 	@Autowired
 	ProductRepo repo;
+	
+	@Autowired
+	RabbitSender send;
 
 	public List<Product> getAll() {
 		List<Product> products = repo.findAll();
@@ -29,8 +32,7 @@ public class ProductService {
 		return repo.findById(id);
 	}
 
-	public Product createProd(Product product) {
-		repo.save(product);
+	public Product createProd(Product product) {	
 		return product;
 	}
 
