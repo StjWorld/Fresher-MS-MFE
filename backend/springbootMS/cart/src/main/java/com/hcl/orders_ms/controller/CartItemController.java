@@ -25,7 +25,7 @@ public class CartItemController {
 
     @PutMapping
     public ResponseEntity<CartItem> updateCart(CartItem cartItem){
-        cartItemService.updateCart(cartItem);
+        cartItemService.createItem(cartItem);
         return ResponseEntity.noContent().build();
     }
 

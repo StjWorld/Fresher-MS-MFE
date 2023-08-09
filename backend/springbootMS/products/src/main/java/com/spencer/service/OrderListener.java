@@ -19,6 +19,9 @@ public class OrderListener {
 	
 	@RabbitListener(queues = queue)
 	public void listen(InventoryUpdate message) {
+
+		System.out.println(message);
+
 		try {
 			message.getProds().forEach((key, value) ->{
 				Optional<Product> prod = service.getProductById(key);
@@ -26,7 +29,8 @@ public class OrderListener {
 				service.updateProd(prod.get());
 			});
 		}catch(Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
+
 		}
 	}
 }
