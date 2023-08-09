@@ -28,9 +28,6 @@ public class CartController {
     @Autowired
     private RabbitMQProducerToProd producer;
 
-    @Autowired
-    private ProducerToOrder producerToOrder;
-
     @PostMapping("/purchase")
     public ResponseEntity<String> sendMessage(@RequestBody Cart cart){
         System.out.println("The cart: "+cart);
@@ -44,7 +41,7 @@ public class CartController {
         cartWithProds.setProds(map);
 
         producer.sendMessage(cartWithProds);
-        return ResponseEntity.ok(cartWithProds + "are being sent to Producers");
+        return ResponseEntity.ok(cartWithProds + " is being sent to Producers");
     }
     
     @GetMapping

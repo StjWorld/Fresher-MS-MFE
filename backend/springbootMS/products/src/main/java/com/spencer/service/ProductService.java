@@ -14,9 +14,6 @@ public class ProductService {
 	
 	@Autowired
 	ProductRepo repo;
-	
-	@Autowired
-	RabbitSender send;
 
 	public List<Product> getAll() {
 		List<Product> products = repo.findAll();

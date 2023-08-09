@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +28,7 @@ public class Order {
   private Long id; //NOT AUTO GENERATED. receive cart_id as the order_id(id)
 
   @Column(name = "order_date")
-  private LocalDateTime orderDate;
+  private Date orderDate;
 
   @OneToMany(
     mappedBy = "order",

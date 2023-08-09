@@ -37,7 +37,7 @@ public class RabbitConfig {
 	
 	@Bean
 	Binding cartToOrderBinding() {
-		return BindingBuilder.bind(orderToProdQueue()).to(exchange()).with(CartToOrderKey);
+		return BindingBuilder.bind(cartToOrderQueue()).to(exchange()).with(CartToOrderKey);
 	}
 	
 	@Bean
