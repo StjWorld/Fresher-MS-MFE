@@ -47,7 +47,9 @@ public class CartListener {
 			items.add(prod);
 		});
 		toSave.setOrderProducts(items);
+		System.out.println("Saving cart with id: "+toSave.getId()+" to DB");
 		repo.save(toSave);
+		System.out.println("Sending {"+toUpdate+"} to ProductMS");
 		sender.sendMessage(toUpdate);
 
 	}
