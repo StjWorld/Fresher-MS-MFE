@@ -54,11 +54,7 @@ public class ProdConsumer {
                     //send message order service
                     System.out.println("Sending {"+cartWithProds+"} to Order MS");
                     producerToOrder.sendMessage(cartWithProds);        			
-
-                    //Once sent to order service, delete the record from cart database;
-                    // Had to compound deleting from cart_item database since databases are decoupled
-                    // Query for deleting by cartId (one call instead of many):
-                    //		DELETE FROM cart_item c WHERE c.cart_id = ?1
+                    //delete purchased cart from cart db
                     cart.forEach(item ->{
                     	itemService.deleteItem(item.getItemId());
                     });
