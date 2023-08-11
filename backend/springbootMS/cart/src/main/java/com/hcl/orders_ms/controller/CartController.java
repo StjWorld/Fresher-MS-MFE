@@ -27,6 +27,11 @@ public class CartController {
     @PostMapping("/purchase")
     public ResponseEntity<String> sendMessage(@RequestBody Cart cart){
         System.out.println("The cart: "+cart);
+        //delete old cart
+        cartService.deleteCart(cart.getId());
+        //save new cart
+        cartService.createCart(cart);
+        //fill cart with prods with new cart for purchase message
         CartWithProds cartWithProds = new CartWithProds();
         HashMap<Long,Long> map = new HashMap<>();
 
@@ -58,7 +63,7 @@ public class CartController {
         return new ResponseEntity<Cart>(toMake, HttpStatus.CREATED);
     }
 
-    
+    /*
     @PutMapping("/{id}")
     public ResponseEntity<Cart> updateCart(@PathVariable("id")Long id, @RequestBody Cart cart){
     	Cart toMake = new Cart();
@@ -70,6 +75,7 @@ public class CartController {
         return new ResponseEntity<Cart>(toMake, HttpStatus.CREATED);
 
     }
+     */
 
     @GetMapping("/{id}")
     public ResponseEntity<Cart> getCartById(@PathVariable("id")Long id){

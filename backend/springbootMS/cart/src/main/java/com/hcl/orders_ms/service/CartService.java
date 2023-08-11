@@ -31,7 +31,14 @@ public class CartService {
         }
     }
 
-    public Optional<Cart> getCartById(Long id) {return cartRepo.findById(id);}
+    public Optional<Cart> getCartById(Long id) {
+    	Optional<Cart> cart = cartRepo.findById(id);
+    	List<CartItem> items = itemService.getByCartId(id);
+    	if(cart.isPresent()) {
+    		cart.get().setCartItems(items);
+    	}
+    	return cart;
+    }
 
     public Cart createCart(Cart cart){
     	
@@ -58,6 +65,7 @@ public class CartService {
         }
     }
 
+    /*
 	public Cart updateCart(Long id, List<CartItem> list) {
 		//create List<CartItem> from request body
 		List<CartItem> toUpdate = list;
@@ -109,5 +117,6 @@ public class CartService {
 		//return cartRepo.saveAndFlush;
 		return cartRepo.saveAndFlush(cart.get());
 	}
+	*/
 
 }
